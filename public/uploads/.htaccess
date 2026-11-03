@@ -1,0 +1,7 @@
+# Interdire l'exécution de scripts dans le dossier des médias
+
+<FilesMatch "\.(php|php5|phtml|exe|sh)$">
+Order Deny,Allow
+Deny from all
+</FilesMatch>
+Options -Indexes
