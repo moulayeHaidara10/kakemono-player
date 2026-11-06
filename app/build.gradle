@@ -3,12 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.kakemono.player'
     compileSdk 33
 
     defaultConfig {
         applicationId "com.kakemono.player"
-        minSdk 25 // Indispensable pour votre Android 7.1.2
+        minSdk 25
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -19,13 +18,8 @@ android {
             minifyEnabled false
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
 }
