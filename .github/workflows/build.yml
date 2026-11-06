@@ -21,12 +21,12 @@ jobs:
       - name: Download and Install Gradle 7.5
         run: |
           wget https://services.gradle.org/distributions/gradle-7.5-bin.zip
-          unzip gradle-7.5-bin.zip
+          unzip -q gradle-7.5-bin.zip
           sudo mv gradle-7.5 /opt/gradle
           echo "/opt/gradle/bin" >> $GITHUB_PATH
 
       - name: Build APK with Gradle
-        run: gradle assembleDebug
+        run: gradle assembleDebug --stacktrace
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
