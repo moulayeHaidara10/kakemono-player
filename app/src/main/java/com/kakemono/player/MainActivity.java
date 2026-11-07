@@ -34,10 +34,13 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // Forcer le mode plein écran permanent et garder l'écran allumé
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    setContentView(R.layout.activity_main);
+    imageView = findViewById(R.id.imageView);
+    videoView = findViewById(R.id.videoView);
+
+// Test visuel immédiat
+    imageView.setBackgroundColor(android.graphics.Color.RED);
+    imageView.setVisibility(View.VISIBLE);
 
         setContentView(R.layout.activity_main);
 
@@ -55,47 +58,12 @@ public class MainActivity extends Activity {
     }
 
     private void playNextMedia() {
-        if (playlist.isEmpty()) return;
-
-        // Récupérer l'élément actuel
-        MediaItem item = playlist.get(currentIndex);
-
-        // Passer à l'index suivant pour faire une boucle infinie
-        currentIndex = (currentIndex + 1) % playlist.size();
-
-        if ("image".equals(item.type)) {
-            videoView.setVisibility(View.GONE);
-            imageView.setVisibility(View.VISIBLE);
-
-            // Téléchargement et affichage de l'image en arrière-plan
-            new Thread(() -> {
-                try {
-                    java.io.InputStream is = new java.net.URL(item.url).openStream();
-                    android.graphics.Bitmap bitmap = android.graphics.BitmapFactory.decodeStream(is);
-                    runOnUiThread(() -> imageView.setImageBitmap(bitmap));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }).start();
-
-            // Afficher l'image pendant 10 secondes avant de passer au média suivant
-            handler.postDelayed(this::playNextMedia, 10000);
-
-        } else if ("video".equals(item.type)) {
-            imageView.setVisibility(View.GONE);
-            videoView.setVisibility(View.VISIBLE);
-
-            videoView.setVideoURI(Uri.parse(item.url));
-            videoView.setOnPreparedListener(mp -> mp.start());
-            
-            // Passer au média suivant dès que la vidéo se termine
-            videoView.setOnCompletionListener(mp -> playNextMedia());
-            
-            // En cas d'erreur de lecture, passer au suivant pour ne pas bloquer
-            videoView.setOnErrorListener((mp, what, extra) -> {
-                playNextMedia();
-                return true;
-            });
-        }
-    }
+        private void playNextMedia() {
+    runOnUiThread(() -> {
+        // Force l'affichage d'un fond vert vif pour valider que la vue fonctionne
+        imageView.setBackgroundColor(android.graphics.Color.GREEN);
+        imageView.setVisibility(View.VISIBLE);
+        videoView.setVisibility(View.GONE);
+    });
+}
 }
